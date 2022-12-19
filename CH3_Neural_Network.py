@@ -114,4 +114,28 @@ B.shape[1]
 
 # ## 3.3.2 행렬의 곱
 
+A=np.array([[1,2],[3,4]])
+B=np.array([[5,6],[7,8]])
+A.shape
+
+B.shape
+
+np.dot(A,B)
+
+A=np.array([[1,2,3],[4,5,6]])
+A.shape
+
+B=np.array([[1,2],[3,4],[5,6]])
+B.shape
+
+np.dot(A,B)
+
+A=np.array([[1,2],[3,4],[5,6]])
+A.shape
+
+B=np.array([7,8])
+B.shape #1차원 배열의 shape를 1*2 가 아닌 (2,)로 표현하는 것에 주의
+
+np.dot(A,B)
+
 
