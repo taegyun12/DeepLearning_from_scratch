@@ -138,4 +138,115 @@ B.shape #1차원 배열의 shape를 1*2 가 아닌 (2,)로 표현하는 것에 �
 
 np.dot(A,B)
 
+# ## 3층의 신경망 구현하기
+# ### 다차원 배열 사용
+
+# +
+
+X=np.array([1.0,0.5]) #입력 노드의 값
+W1=np.array([[0.1,0.3,0.5],[0.2,0.4,0.6]]) #weight
+B1=np.array([0.1,0.2,0.3]) #bias
+
+print(W1.shape)
+# -
+
+print(X.shape)
+
+print(B1.shape)
+
+A1=np.dot(X,W1)+B1
+
+# +
+Z1=sigmoid(A1)
+
+print(A1)
+print(Z1)
+# -
+
+W2=np.array([[0.1,0.4],[0.2,0.5],[0.3,0.6]])
+B2=np.array([0.1,0.2])
+print(Z1.shape)
+print(W2.shape)
+print(B2.shape)
+
+A2=np.dot(Z1,W2)+B2
+Z2=sigmoid(A2)
+
+
+# +
+def identity_function(x):
+    return x
+
+W3=np.array([[0.1,0.3],[0.2,0.4]])
+B3=np.array([0.1,0.2])
+
+A3=np.dot(Z2,W3)+B3
+Y=identity_function(A3)
+# -
+
+print(Y)
+
+
+# ## 3.4.3 구현 정리
+#
+
+# +
+def init_network():
+    network={} #dictionary
+    network['W1']=np.array([[0.1,0.3,0.5],[0.2,0.4,0.6]])
+    network['b1']=np.array([0.1,0.2,0.3])
+    network['W2']=np.array([[0.1,0.4],[0.2,0.5],[0.3,0.6]])
+    network['b2']=np.array([0.1,0.2])
+    network['W3']=np.array([[0.1,0.3],[0.2,0.4]])
+    network['b3']=np.array([0.1,0.2])
+    
+    return network
+
+def forward(network,x):
+    W1,W2,W3=network['W1'],network['W2'],network['W3']
+    b1,b2,b3=network['b1'],network['b2'],network['b3']
+    
+    a1=np.dot(x,W1)+b1
+    z1=sigmoid(a1) #활성화 함수 처리
+    a2=np.dot(z1,W2)+b2
+    z2=sigmoid(a2)
+    a3=np.dot(z2,W3)+b3
+    y=identity_function(a3)
+    
+    return y
+
+network=init_network()
+x=np.array([1.0,0.5])
+y=forward(network,x)
+print(y)
+# -
+
+# ## 3.5 출력층 설계하기
+# ### 3.5.1 항등함수와 소프트맥스 함수 구현하기
+# #### -classification 과 regression 이 대표적인 기계학습에서의 문제이다.
+# #### -classificatioin(분류)에서는 주로 소프트맥스 함수를 출력층에서 활성화 함수로 사용한다.
+# #### -regression(회귀)에서는 주로 항등 함수를 출력층에서 활성화 함수로 사용한다.
+
+a=np.array([0.3,2.9,4.0])
+exp_a=np.exp(a)
+print(exp_a)
+
+sum_exp_a=np.sum(exp_a)
+print(sum_exp_a)
+
+y=exp_a/sum_exp_a
+print(y)
+
+# ### 3.5.2 소프트맥스 함수 구현 시 주의점 (overflow 관점)
+
+a=np.array([1010,1000,990])
+np.exp(a)/np.sum(np.exp(a)) #overflow 발생
+
+c=np.max(a)
+print(c)
+
+a-c
+
+np.exp(a-c)/np.sum(np.exp(a-c))
+
 
