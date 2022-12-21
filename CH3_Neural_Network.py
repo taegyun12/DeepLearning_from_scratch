@@ -250,3 +250,35 @@ a-c
 np.exp(a-c)/np.sum(np.exp(a-c))
 
 
+def softmax(a):
+    c=np.max(a)
+    exp_a=np.exp(a-c)
+    sum_exp_a=np.sum(exp_a)
+    y=exp_a/sum_exp_a
+    return y
+
+
+a=np.array([0.3,2.9,4.0])
+y=softmax(a)
+print(y)
+
+np.sum(y) #softmax 함수의 출력의 총합은 1이다. 확률과 비슷한 성질을 갖고 있다.
+
+# ## 3.6 손글씨 숫자 인식
+
+# +
+import sys, os
+sys.path.append("C:\\Users\\user\\Deeplearning_from_scratch") # 부모 디렉토리의 파일을 가져올 수 있도록 설정
+from dataset.mnist import load_mnist
+
+(x_train, t_train), (x_test, t_test) = load_mnist(flatten=True, normalize=False)
+
+# -
+
+
+
+
+
+
+
+
